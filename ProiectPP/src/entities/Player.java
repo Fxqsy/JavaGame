@@ -21,10 +21,8 @@ public class Player extends Entity{
     private int aniTick,aniIndex,aniSpeed=15;
     private int playerAction = IDLE;
     private boolean moving = false , attacking = false, contAttack = false;
-    private int attackTimer = 0;
-    private  final int ATTACK_DURATION = 30;
     private boolean left, up, right, down, jump;
-    private float playerSpeed = 2.0f;
+    private float playerSpeed = 1.0f * Game.SCALE;
     private int[][] lvlData;
 
     private float yDrawOffset = 235/3f *Game.SCALE;
@@ -40,7 +38,7 @@ public class Player extends Entity{
     public Player(float x, float y,int width, int height) {
         super(x, y,width,height);
         loadAnimations();
-        initHitbox(x,y,109*Game.SCALE/3,168*Game.SCALE/3);
+        initHitbox(x,y,(int)(109*Game.SCALE/3),(int)(168*Game.SCALE/3));
 
 
 
@@ -54,9 +52,9 @@ public class Player extends Entity{
 
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics g, int lvlOffset) {
 // scalare caracter 500 x 570 original
-        g.drawImage(animations[playerAction][aniIndex],(int)(hitbox.x- xDrawOffset),(int)(hitbox.y-yDrawOffset) ,(int)(500*Game.SCALE/3),(int)(570*Game.SCALE/3),null);
+        g.drawImage(animations[playerAction][aniIndex],(int)(hitbox.x- xDrawOffset) - lvlOffset,(int)(hitbox.y-yDrawOffset) ,(int)(500*Game.SCALE/3),(int)(570*Game.SCALE/3),null);
 //        drawHitbox(g);
     }
 
@@ -111,9 +109,12 @@ public class Player extends Entity{
         moving = false;
         if(jump)
             jump();
-        if(!left && !right && !inAir)
-            return;
-
+//        if(!left && !right && !inAir)
+//            return;
+        if(!inAir){
+            if((!left && !right) || (right && left))
+                return;
+        }
         float xSpeed=0;
 
         if(left)

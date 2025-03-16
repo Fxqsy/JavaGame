@@ -1,8 +1,10 @@
 package gamestates;
 
 import entities.Player;
+import jdk.jshell.Snippet;
 import levels.LevelManager;
 import main.Game;
+import utils.LoadSave;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -11,6 +13,14 @@ import java.awt.event.MouseEvent;
 public class Playing extends State implements StateMethods{
     private Player player;
     private LevelManager levelManager;
+    private boolean paused = false;
+
+    private int xLvlOffset;
+    private int leftBorder = (int)(0.2 * Game.GAME_WIDTH);
+    private int rightBorder = (int)(0.8 * Game.GAME_WIDTH);
+    private int lvlTilesWide = LoadSave.GetLevelData()[0].length;
+    private int maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
+    private int maxLvlOoffsetX = maxTilesOffset * Game.TILES_SIZE;
 
     public Playing(Game game) {
         super(game);
@@ -29,12 +39,38 @@ public class Playing extends State implements StateMethods{
     public void update() {
         levelManager.update();
         player.update();
+        checkCloseToBorder();
+    }
+
+    private void checkCloseToBorder() {
+        int playerX = (int) player.getHitbox().x;
+        int diff = playerX - xLvlOffset;
+
+        if(diff > rightBorder){
+            xLvlOffset += diff - rightBorder;
+        }
+        else if(diff < leftBorder){
+            xLvlOffset += diff - leftBorder;
+        }
+        if(xLvlOffset > maxLvlOoffsetX){
+            xLvlOffset = maxTilesOffset;
+        }
+        else if(xLvlOffset < 0){
+            xLvlOffset = 0;
+        }
+
     }
 
     @Override
     public void draw(Graphics g) {
-        levelManager.draw(g);
-        player.render(g);
+        levelManager.draw(g, xLvlOffset);
+        player.render(g, xLvlOffset);
+//      PAUSE MENU
+//        if(paused){
+//            g.setColor(new Color(0,0,0,150));
+//            g.fillRect(0,0,Game.GAME_WIDTH,Game.GAME_HEIGHT);
+//            pauseOverlay.draw(g);
+//        }
     }
 
     @Override
@@ -60,7 +96,7 @@ public class Playing extends State implements StateMethods{
     }
 
     @Override
-    public void mouseMove(MouseEvent e) {
+    public void mouseMoved(MouseEvent e) {
 
     }
 
