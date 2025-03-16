@@ -19,6 +19,7 @@ public class Constants {
         public static final int ATTACK_1 = 5;
         public static final int ATTACK_2 = 6;
         public static final int ATTACK_3 = 7;
+        public static final int ATTACK_HOLD = 8;
 
         public static int GetSpriteAmount(int player_action){
             switch(player_action){
@@ -38,6 +39,8 @@ public class Constants {
                     return 16;
                 case ATTACK_3:
                     return 17;
+                case ATTACK_HOLD:
+                    return 21;
                 default:
                     return 1;
 
