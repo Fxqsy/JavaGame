@@ -15,12 +15,12 @@ public class LoadSave {
 	public static final String LEVEL_ATLAS = "free.png";
 //	public static final String LEVEL_ONE_DATA = "pixil-frame-0.png";
 	public static final String LEVEL_ONE_DATA = "lvl_long.png";
-	public static final String MENU_BUTTONS = "button_atlas.png";
-	public static final String MENU_BACKGROUND = "menu_background.png";
-	public static final String PAUSE_BACKGROUND = "pause_menu.png";
-	public static final String SOUND_BUTTONS = "sound_button.png";
-	public static final String URM_BUTTONS = "urm_buttons.png";
-	public static final String VOLUME_BUTTONS = "volume_buttons.png";
+	public static final String MENU_BUTTONS = "button_atlas1.png";
+	public static final String MENU_BACKGROUND = "Menu_bg.png";
+	public static final String PAUSE_BACKGROUND = "pause_menu1.png";
+	public static final String SOUND_BUTTONS = "sound_button1.png";
+	public static final String URM_BUTTONS = "urm_buttons1.png";
+	public static final String VOLUME_BUTTONS = "volume_buttons1.png";
 
 
 	public static BufferedImage GetSpriteAtlas(String fileName) {
