@@ -10,19 +10,19 @@ import utilz.LoadSave;
 
 public class Player extends Entity {
 	private BufferedImage[][] animations;
-	private int aniTick, aniIndex, aniSpeed = 32;
+	private int aniTick, aniIndex, aniSpeed = 40;
 	private int playerAction = IDLE;
 	private boolean moving = false, attacking = false;
 	private boolean left, up, right, down, jump;
-	private float playerSpeed = 1.0f * Game.SCALE;
+	private float playerSpeed = 0.75f * Game.SCALE;
 	private int[][] lvlData;
 	private float xDrawOffset = 9 * Game.SCALE;
-	private float yDrawOffset = 11 * Game.SCALE;
+	private float yDrawOffSet = 11 * Game.SCALE;
 
 	// Jumping / Gravity
 	private float airSpeed = 0f;
-	private float gravity = 0.01f * Game.SCALE;
-	private float jumpSpeed = -2.25f * Game.SCALE;
+	private float gravity = 0.04f * Game.SCALE;
+	private float jumpSpeed = -2.00f * Game.SCALE;
 	private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
 	private boolean inAir = false;
 
@@ -39,8 +39,8 @@ public class Player extends Entity {
 		setAnimation();
 	}
 
-	public void render(Graphics g) {
-		g.drawImage(animations[playerAction][aniIndex], (int) (hitbox.x - xDrawOffset), (int) (hitbox.y - yDrawOffset), width, height, null);
+	public void render(Graphics g, int lvlOffset) {
+		g.drawImage(animations[playerAction][aniIndex], (int) (hitbox.x - xDrawOffset) - lvlOffset, (int) (hitbox.y - yDrawOffSet), width, height, null);
 		drawHitbox(g);
 	}
 
@@ -73,8 +73,11 @@ public class Player extends Entity {
 				playerAction = FALLING;
 		}
 
-		if (attacking)
+		if (attacking){
+
 			playerAction = ATTACK_1;
+		}
+
 
 		if (startAni != playerAction)
 			resetAniTick();
@@ -90,8 +93,10 @@ public class Player extends Entity {
 
 		if (jump)
 			jump();
-		if (!left && !right && !inAir)
-			return;
+
+		if (!inAir)
+			if ((!left && !right) || (right && left))
+				return;
 
 		float xSpeed = 0;
 

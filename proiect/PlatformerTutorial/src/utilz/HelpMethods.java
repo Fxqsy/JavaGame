@@ -10,7 +10,6 @@ public class HelpMethods {
 
 	private static final Set<Integer> TRANSP_TILES = new HashSet<>();
 	static {
-		// Initialize the set with solid tile values
 		TRANSP_TILES.add(95);
 		TRANSP_TILES.add(84);
 		TRANSP_TILES.add(72);
@@ -31,7 +30,45 @@ public class HelpMethods {
 		TRANSP_TILES.add(27);
 		TRANSP_TILES.add(28);
 		TRANSP_TILES.add(39);
+		TRANSP_TILES.add(22);
 		TRANSP_TILES.add(40);
+		TRANSP_TILES.add(29);
+		TRANSP_TILES.add(30);
+		TRANSP_TILES.add(31);
+		TRANSP_TILES.add(32);
+		TRANSP_TILES.add(41);
+		TRANSP_TILES.add(42);
+		TRANSP_TILES.add(43);
+		TRANSP_TILES.add(44);
+		TRANSP_TILES.add(51);
+		TRANSP_TILES.add(52);
+		TRANSP_TILES.add(53);
+	}
+
+	private static final Set<Integer> SOLID_TILES = new HashSet<>();
+	static{
+		SOLID_TILES.add(1);
+		SOLID_TILES.add(2);
+		SOLID_TILES.add(3);
+		SOLID_TILES.add(4);
+		SOLID_TILES.add(5);
+		SOLID_TILES.add(6);
+		SOLID_TILES.add(7);
+		SOLID_TILES.add(8);
+		SOLID_TILES.add(9);
+		SOLID_TILES.add(13);
+		SOLID_TILES.add(14);
+		SOLID_TILES.add(15);
+		SOLID_TILES.add(16);
+		SOLID_TILES.add(17);
+		SOLID_TILES.add(18);
+		SOLID_TILES.add(19);
+		SOLID_TILES.add(20);
+		SOLID_TILES.add(21);
+		SOLID_TILES.add(24);
+		SOLID_TILES.add(25);
+		SOLID_TILES.add(26);
+
 	}
 
 	public static boolean CanMoveHere(float x, float y, float width, float height, int[][] lvlData) {
@@ -44,7 +81,8 @@ public class HelpMethods {
 	}
 
 	private static boolean IsSolid(float x, float y, int[][] lvlData) {
-		if (x < 0 || x >= Game.GAME_WIDTH)
+		int maxWidth = lvlData[0].length * Game.TILES_SIZE;
+		if (x < 0 || x >= maxWidth)
 			return true;
 		if (y < 0 || y >= Game.GAME_HEIGHT)
 			return true;
@@ -53,7 +91,7 @@ public class HelpMethods {
 
 		int value = lvlData[(int) yIndex][(int) xIndex];
 
-		if (value >= 96 || value < 0 || !TRANSP_TILES.contains(value))
+		if (value >= 96 || value < 0 || SOLID_TILES.contains(value))
 			return true;
 		return false;
 	}
